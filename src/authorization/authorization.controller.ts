@@ -1,6 +1,16 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthCredentialDTO } from './dto/auth-credential.dto';
 import { AuthorizationService } from './authorization.service';
+import { AuthGuard } from '@nestjs/passport';
 @Controller('authorization')
 export class AuthorizationController {
   constructor(private authService: AuthorizationService) {}
@@ -18,13 +28,19 @@ export class AuthorizationController {
     });
   }
   @Post('/signin')
-  signIn(@Body() authCredentialDTO: AuthCredentialDTO):Promise<accessToken:string> {
+  signIn(
+    @Body() authCredentialDTO: AuthCredentialDTO,
+  ): Promise<{ accessToken: string }> {
     return this.authService.signIn(authCredentialDTO);
   }
 
   @Post('/test')
-  @UserGuard(AuthGuard())
-  test(@Req req){
+  @UseGuards(AuthGuard())
+  test(@Req() req, @Res() res) {
     console.log(req);
+    return res.json({
+      ok: true,
+      message: 'ruta :D',
+    });
   }
 }

@@ -4,11 +4,15 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
 import { AuthorizationModule } from './authorization/authorization.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     ProductModule,
-    MongooseModule.forRoot('mongodb://localhost/productos-nest-tutorial', {
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+    }),
+    MongooseModule.forRoot(process.env.DB_CNN_STRING, {
       useNewUrlParser: true,
     }),
     AuthorizationModule,
