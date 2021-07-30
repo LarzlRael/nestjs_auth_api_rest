@@ -18,7 +18,6 @@ export class AuthorizationController {
   @Post('/signup')
   async signup(@Body() authCredentialDTO: AuthCredentialDTO): Promise<void> {
     const user = await this.authService.createUser(authCredentialDTO);
-    console.log('producto creado ' + user);
   }
   @Get('/users')
   async getUsers(@Res() res) {
