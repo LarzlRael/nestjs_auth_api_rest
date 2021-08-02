@@ -6,6 +6,7 @@ import {
   Body,
   Delete,
   Query,
+  Render,
 } from '@nestjs/common';
 import { Task } from './dto/task.entity';
 import { TasksService } from './tasks.service';

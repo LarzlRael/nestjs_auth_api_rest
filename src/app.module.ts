@@ -7,6 +7,14 @@ import { AuthorizationModule } from './authorization/authorization.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksModule } from './tasks/tasks.module';
+import { GoogleStrategy } from './authorization/google.strategy';
+import { FacebookStrategy } from './authorization/facebook.stategy';
+import { MulterModule } from '@nestjs/platform-express';
+import { AppGateway } from './app.gateway';
+import { UsersModule } from './users/users.module';
+import { ChatGateway } from './chat/chat.gateway';
+import { AlertGateway } from './alert/alert.gateway';
+import { AlertController } from './alert/alert.controller';
 
 @Module({
   imports: [
@@ -29,8 +37,17 @@ import { TasksModule } from './tasks/tasks.module';
     }),
     AuthorizationModule,
     TasksModule,
+    MulterModule.register({ dest: './files' }),
+    UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, AlertController],
+  providers: [
+    AppService,
+    GoogleStrategy,
+    FacebookStrategy,
+    AppGateway,
+    ChatGateway,
+    AlertGateway,
+  ],
 })
 export class AppModule {}
