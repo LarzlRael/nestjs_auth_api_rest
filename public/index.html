@@ -58,6 +58,7 @@
     </main>
 
     <script>
+        const serverSocket = 'https://nestjstesting.herokuapp.com';
         Vue.component('alerts-component', VueSimpleNotify.VueSimpleNotify)
         var app = new Vue({
             el: '#v-app',
@@ -113,7 +114,7 @@
             created() {
                 this.username = prompt('Enter your username');
 
-                this.socket.chat = io('http://localhost:3000/chat');
+                this.socket.chat = io(`${serverSocket}/chat`);
                 this.socket.chat.on('chatToClient', (msg) => {
                     this.recieveChatMessage(msg);
                 });
@@ -130,7 +131,7 @@
                     this.rooms[room] = false;
                 });
 
-                this.socket.alerts = io('http://localhost:3000/alert');
+                this.socket.alerts = io(`${serverSocket}/alert`);
                 this.socket.alerts.on('alertToClient', (msg) => {
                     console.log(msg);
                     this.recieveAlertMessage(msg);
