@@ -25,7 +25,7 @@ import { AlertController } from './alert/alert.controller';
     MongooseModule.forRoot(process.env.DB_CNN_STRING, {
       useNewUrlParser: true,
     }),
-    TypeOrmModule.forRoot({
+    /* TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
@@ -34,9 +34,9 @@ import { AlertController } from './alert/alert.controller';
       database: 'nestjs_test',
       autoLoadEntities: true,
       synchronize: true,
-    }),
+    }), */
     AuthorizationModule,
-    TasksModule,
+    /* TasksModule, */
     MulterModule.register({ dest: './files' }),
     UsersModule,
   ],
