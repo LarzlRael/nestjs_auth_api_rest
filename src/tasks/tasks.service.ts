@@ -4,6 +4,7 @@ import { Task } from './dto/task.entity';
 import { TaskRepository } from './task.repository';
 import { CreateTaskDto } from './dto/CreateTaskDTO';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { User } from 'src/auth/user.entity';
 
 @Injectable()
 export class TasksService {
@@ -20,8 +21,8 @@ export class TasksService {
     return found;
   }
 
-  async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
-    return this.tasksRepository.createTask(createTaskDto);
+  async createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
+    return this.tasksRepository.createTask(createTaskDto, user);
   }
 
   async delteTask(id: string): Promise<void> {
@@ -31,7 +32,7 @@ export class TasksService {
       throw new NotFoundException(`Task with ID ${id} not found`);
     }
   }
-  async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+  async getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
     const result = await this.tasksRepository.getTasks(filterDto);
     return result;
   }

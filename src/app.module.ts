@@ -15,6 +15,7 @@ import { UsersModule } from './users/users.module';
 import { ChatGateway } from './chat/chat.gateway';
 import { AlertGateway } from './alert/alert.gateway';
 import { AlertController } from './alert/alert.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { AlertController } from './alert/alert.controller';
     /* TasksModule, */
     MulterModule.register({ dest: './files' }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController, AlertController],
   providers: [
