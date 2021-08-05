@@ -16,6 +16,7 @@ import { ChatGateway } from './chat/chat.gateway';
 import { AlertGateway } from './alert/alert.gateway';
 import { AlertController } from './alert/alert.controller';
 import { AuthModule } from './auth/auth.module';
+import { AssetsModule } from './assets/assets.module';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { AuthModule } from './auth/auth.module';
     MongooseModule.forRoot(process.env.DB_CNN_STRING, {
       useNewUrlParser: true,
     }),
-    /* TypeOrmModule.forRoot({
+    TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
@@ -35,12 +36,23 @@ import { AuthModule } from './auth/auth.module';
       database: 'nestjs_test',
       autoLoadEntities: true,
       synchronize: true,
-    }), */
+    }),
+    TypeOrmModule.forRoot({
+      type: 'mariadb',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'nest_js_test',
+      autoLoadEntities: true,
+      synchronize: true,
+    }),
     AuthorizationModule,
-    /* TasksModule, */
+    TasksModule,
     MulterModule.register({ dest: './files' }),
     UsersModule,
     AuthModule,
+    AssetsModule,
   ],
   controllers: [AppController, AlertController],
   providers: [

@@ -3,7 +3,6 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   OnGatewayInit,
-  WsResponse,
   OnGatewayConnection,
   OnGatewayDisconnect,
   WebSocketServer,

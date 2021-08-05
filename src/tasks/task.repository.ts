@@ -1,15 +1,17 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Task } from './dto/task.entity';
-import { CreateTaskDto } from './dto/CreateTaskDTO';
+import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { User } from 'src/auth/user.entity';
+import { TaskStatus } from './task-status.enum';
 
 @EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
-  async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+  async getTasks(filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
     const { status, search } = filterDto;
 
     const query = this.createQueryBuilder('task');
+    query.where({ user });
 
     if (status) {
       query.andWhere('task.status = :status', { status });
@@ -17,7 +19,7 @@ export class TaskRepository extends Repository<Task> {
 
     if (search) {
       query.andWhere(
-        'task.title LIKE LOWER(:search) OR LOWER(task.description) LIKE :search',
+        '(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))',
         { search: `%${search}%` },
       );
     }
@@ -31,7 +33,7 @@ export class TaskRepository extends Repository<Task> {
     const task = this.create({
       title,
       description,
-      status: 'Open',
+      status: TaskStatus.OPEN,
       user,
     });
 
